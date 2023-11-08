@@ -199,7 +199,7 @@ class TestParsing(TestTemplate):
 
     def test_bulk_flows_with_args(self):
         ci_sheet = (
-            "type,sheet_name,data_sheet,data_row_id,template_arguments,new_name,data_model,status\n"
+            "type,sheet_name,data_sheet,data_row_id,template_arguments,new_name,data_model,status\n"  # noqa: E501
             "template_definition,my_template,,,arg1;arg2,,,\n"
             "create_flow,my_template,nesteddata,,ARG1;ARG2,my_renamed_template,,\n"
             "data_sheet,nesteddata,,,,,NestedRowModel,\n"
@@ -294,7 +294,7 @@ class TestParsing(TestTemplate):
 
     def test_insert_as_block_with_sheet_arguments(self):
         ci_sheet = (
-            "type,sheet_name,data_sheet,data_row_id,template_arguments,new_name,data_model,status\n"
+            "type,sheet_name,data_sheet,data_row_id,template_arguments,new_name,data_model,status\n"  # noqa: E501
             "template_definition,my_template,,,lookup;sheet|,,,\n"
             "create_flow,my_template,nesteddata,row3,string_lookup,,,\n"
             "create_flow,my_basic_flow,,,,,,\n"
@@ -316,9 +316,9 @@ class TestParsing(TestTemplate):
         my_template = (
             "row_id,type,from,condition,message_text\n"
             "1,split_by_value,,,@field.mood\n"
-            ",send_message,1,happy,{% for msg in messages %}{{lookup[msg].happy}}{% endfor %}\n"
-            ",send_message,1,sad,{% for msg in messages %}{{lookup[msg].sad}}{% endfor %}\n"
-            ",send_message,1,,{% for msg in messages %}{{lookup[msg].neutral}}{% endfor %}\n"
+            ",send_message,1,happy,{% for msg in messages %}{{lookup[msg].happy}}{% endfor %}\n"  # noqa: E501
+            ",send_message,1,sad,{% for msg in messages %}{{lookup[msg].sad}}{% endfor %}\n"  # noqa: E501
+            ",send_message,1,,{% for msg in messages %}{{lookup[msg].neutral}}{% endfor %}\n"  # noqa: E501
         )
         my_basic_flow = (
             "row_id,type,from,message_text,data_sheet,data_row_id,template_arguments\n"
@@ -387,7 +387,7 @@ class TestParsing(TestTemplate):
 
     def test_insert_as_block_with_arguments(self):
         ci_sheet = (
-            "type,sheet_name,data_sheet,data_row_id,template_arguments,new_name,data_model,status\n"
+            "type,sheet_name,data_sheet,data_row_id,template_arguments,new_name,data_model,status\n"  # noqa: E501
             "template_definition,my_template,,,arg1|arg2;;default2,,,\n"
             "create_flow,my_template,,,value1,my_template_default,,\n"
             "create_flow,my_template,,,value1;value2,my_template_explicit,,\n"
@@ -415,7 +415,7 @@ class TestParsing(TestTemplate):
 
     def test_eval(self):
         ci_sheet = (
-            "type,sheet_name,data_sheet,data_row_id,new_name,data_model,template_arguments,status\n"
+            "type,sheet_name,data_sheet,data_row_id,new_name,data_model,template_arguments,status\n"  # noqa: E501
             "template_definition,flow,,,,,metadata;sheet|,\n"
             "data_sheet,content,,,,EvalContentModel,,\n"
             "data_sheet,metadata,,,,EvalMetadataModel,,\n"
@@ -425,7 +425,7 @@ class TestParsing(TestTemplate):
         flow = (
             '"row_id","type","from","loop_variable","include_if","message_text"\n'
             ',"send_message",,,,"hello"\n'
-            ',"send_message",,,"{@metadata[""a""].include_if|eval == ""yes""@}","{{text}}"\n'
+            ',"send_message",,,"{@metadata[""a""].include_if|eval == ""yes""@}","{{text}}"\n'  # noqa: E501
         )
         content = "ID,text\n" "id1,yes\n" "id2,no\n"
         sheet_dict = {
@@ -597,8 +597,7 @@ class TestParseCampaigns(unittest.TestCase):
 
     def test_parse_message_campaign(self):
         ci_sheet = (
-            "type,sheet_name,new_name,group\n"
-            "create_campaign,my_campaign,,My Group\n"
+            "type,sheet_name,new_name,group\n" "create_campaign,my_campaign,,My Group\n"
         )
         my_campaign = (
             "offset,unit,event_type,delivery_hour,message,relative_to,start_mode,flow\n"
@@ -710,18 +709,9 @@ class TestMultiFile(TestTemplate):
         self.run_minimal(True)
 
     def run_minimal(self, singleindex=False):
-        ci_sheet1 = (
-            "type,sheet_name\n"
-            "create_flow,template\n"
-        )
-        ci_sheet2 = (
-            "type,sheet_name\n"
-            "template_definition,template\n"
-        )
-        template = (
-            "row_id,type,from,message_text\n"
-            ",send_message,start,Hello!\n"
-        )
+        ci_sheet1 = "type,sheet_name\n" "create_flow,template\n"
+        ci_sheet2 = "type,sheet_name\n" "template_definition,template\n"
+        template = "row_id,type,from,message_text\n" ",send_message,start,Hello!\n"
         sheet_dict2 = {
             "template": template,
         }
@@ -759,18 +749,12 @@ class TestMultiFile(TestTemplate):
             "create_flow,template,names,,draft\n"
         )
         template1 = (
-            "row_id,type,from,message_text\n"
-            ",send_message,start,hello {{name}}\n"
+            "row_id,type,from,message_text\n" ",send_message,start,hello {{name}}\n"
         )
         template2 = (
-            "row_id,type,from,message_text\n"
-            ",send_message,start,hi {{name}}\n"
+            "row_id,type,from,message_text\n" ",send_message,start,hi {{name}}\n"
         )
-        names = (
-            "ID,name\n"
-            "a,georg\n"
-            "b,chiara\n"
-        )
+        names = "ID,name\n" "a,georg\n" "b,chiara\n"
         sheet_dict1 = {
             "template": template1,
             "names": names,

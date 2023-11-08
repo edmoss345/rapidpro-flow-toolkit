@@ -341,7 +341,7 @@ class ContentIndexParser:
             # Check if these args are non-empty.
             # Once the row parser is cleaned up to eliminate trailing ''
             # entries, this won't be necessary
-            extra_args = args[len(arg_defs):]
+            extra_args = args[len(arg_defs) :]
             non_empty_extra_args = [ea for ea in extra_args if ea]
             if non_empty_extra_args:
                 LOGGER.warn("Too many arguments provided to template")
