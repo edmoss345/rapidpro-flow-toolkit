@@ -12,7 +12,8 @@ cd rapidpro_flow_toolkit
 python -m venv .venv
 
 # Activate venv
-source .venv/bin/activate
+- Linux: `source .venv/bin/activate`
+- Windows: `.venv/Scripts/activate`
 
 # Upgrade pip
 pip install --upgrade pip
